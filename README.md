@@ -19,7 +19,7 @@ Foosha sebagai DHCP Relay
 ## Soal 3
 Client yang melalui Switch1 mendapatkan range IP dari `[prefix IP].1.20 - [prefix IP].1.99` dan `[prefix IP].1.150 - [prefix IP].1.169`
 ### Pada Jipangu
-- Edit file konfigurasi isc-dhcp-server pada `/etc/dhcp/dhcpd.conf`
+- Edit file `/etc/dhcp/dhcpd.conf`
 - Tambahkan 
 ```
 2-4, 6. subnet 10.24.2.0 netmask 255.255.255.0{
@@ -38,7 +38,7 @@ subnet 10.24.1.0 netmask 255.255.255.0{
 
 ## Soal 4
 ### Pada Jipangu
-- Edit file konfigurasi isc-dhcp-server pada `/etc/dhcp/dhcpd.conf`
+- Edit file `/etc/dhcp/dhcpd.conf`
 - Tambahkan 
 ```
 subnet 10.24.3.0 netmask 255.255.255.0{
