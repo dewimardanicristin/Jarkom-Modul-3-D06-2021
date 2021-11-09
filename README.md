@@ -152,11 +152,18 @@ dan atur `named.conf.local`:
 ![image](https://user-images.githubusercontent.com/58657135/140869534-854552b9-21ab-435f-ad3f-c7b2ee64eb7a.png)
 
 ### Pada Skypie(Web Server)
-Install apache2 terlebih dahulu lalu extract zip `super.franky.d06.com` dan lakukan `service apache2 restart`.
+Install apache2 terlebih dahulu lalu extract zip `super.franky.d06.com`, membuat file conf pada folder sites-available, melakukan `a2ensite super.franky.d06.com` dan lakukan `service apache2 restart`.:
+![image](https://user-images.githubusercontent.com/58657135/140912669-3a0ff23a-3187-4359-b58f-925695ef175b.png)
 
 ### Akses dengan client
+Test dengan menyalakan proxy lalu mengakses 'google.com'
 
+![image](https://user-images.githubusercontent.com/58657135/140913740-003e5e91-fe8f-4367-8d97-b8b57d67e140.png)
 
-### Pada 
+![image](https://user-images.githubusercontent.com/58657135/140913779-4de3e73a-e943-444d-9ef7-08eb098c6ca5.png)
+
+![image](https://user-images.githubusercontent.com/58657135/140913804-f20ede10-c2c5-4051-aa23-291a39c0c302.png)
+
+(jika tidak bisa test dulu apakah di proxy server bisa ngakses ke super.fraanky.d06.com pakai lynx)
 ## Soal 12
 ## Soal 13
