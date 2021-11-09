@@ -143,12 +143,15 @@ Pertama sambungkan terlebih dahulu Water7 dengan Enieslobby (ubah nameserver):
 
 ### Pada Enieslobby(DNS Server)
 atur dns pada EniesLobby agar mengarahkan domain `franky.d06.com` dan sub-domain `super.franky.d06.com` ke IP Skypie:
+
 ![image](https://user-images.githubusercontent.com/58657135/140869387-b0fb961a-3ac5-4fbc-b4da-21f6dca69aea.png)
 
 dan atur reverse ptr nya:
+
 ![image](https://user-images.githubusercontent.com/58657135/140869472-9d907d8a-b1a3-42a8-ba66-b9775586df76.png)
 
 dan atur `named.conf.local`:
+
 ![image](https://user-images.githubusercontent.com/58657135/140869534-854552b9-21ab-435f-ad3f-c7b2ee64eb7a.png)
 
 ### Pada Skypie(Web Server)
