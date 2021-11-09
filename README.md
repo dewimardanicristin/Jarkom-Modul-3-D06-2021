@@ -31,7 +31,7 @@ subnet 10.24.1.0 netmask 255.255.255.0{
     option routers 10.24.1.1;
     option broadcast-address 10.24.1.255;
     option domain-name-servers 10.24.2.2;
-    default-lease-time 600;
+    default-lease-time 360;
     max-lease-time 7200;
 }
 ```
@@ -46,7 +46,7 @@ subnet 10.24.3.0 netmask 255.255.255.0{
     option routers 10.24.3.1;
     option broadcast-address 10.24.3.255;
     option domain-name-servers 10.24.2.2;
-    default-lease-time 600;
+    default-lease-time 720;
     max-lease-time 7200;
 }
 
