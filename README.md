@@ -97,13 +97,46 @@ Luffy dan Zoro berencana menjadikan Skypie sebagai server untuk jual beli kapal 
 - Jika dicek dengan `ip a` maka dapat dilihat bahwa IP Skypie telah berubah
 - ![image](https://user-images.githubusercontent.com/81247727/140746629-40f16fd1-80b4-4f68-a18f-0ca3f67a5473.png)
 
-## Soal 8
-Pada Loguetown, proxy harus bisa diakses dengan nama jualbelikapal.yyy.com dengan port yang digunakan adalah 5000
+## Soal 8-10
+- Pada Loguetown, proxy harus bisa diakses dengan nama jualbelikapal.yyy.com dengan port yang digunakan adalah 5000
+- Agar transaksi jual beli lebih aman dan pengguna website ada dua orang, proxy dipasang autentikasi user proxy dengan enkripsi MD5 dengan dua username, yaitu luffybelikapalyyy dengan password luffy_yyy dan zorobelikapalyyy dengan password zoro_yyy 
+- Transaksi jual beli tidak dilakukan setiap hari, oleh karena itu akses internet dibatasi hanya dapat diakses setiap hari Senin-Kamis pukul 07.00-11.00 dan setiap hari Selasa-Jum’at pukul 17.00-03.00 keesokan harinya (sampai Sabtu pukul 03.00)
 
-## Soal 9
-Agar transaksi jual beli lebih aman dan pengguna website ada dua orang, proxy dipasang autentikasi user proxy dengan enkripsi MD5 dengan dua username, yaitu luffybelikapalyyy dengan password luffy_yyy dan zorobelikapalyyy dengan password zoro_yyy 
+Atur pengaturan pada `/etc/squid/squid.conf` seperti berikut:
+```
+include /etc/squid/acl.conf
+http_port 5000
+visible_hostname jualbelikapal.d06.com
 
-## Soal 10
+auth_param basic program /usr/lib/squid/basic_ncsa_auth /etc/squid/passwd
+auth_param basic children 5
+auth_param basic realm Proxy
+auth_param basic credentialsttl 2 hours
+auth_param basic casesensitive on
+
+acl USERS proxy_auth REQUIRED
+http_access allow AVAILABLE_WORKING1 USERS
+http_access allow AVAILABLE_WORKING2 USERS
+http_access allow AVAILABLE_WORKING3 USERS
+http_access deny all
+```
+
+Lalu pada `/etc/squid/acl.conf` kita isi:
+```
+acl AVAILABLE_WORKING time MTWH 07:00-11:00
+acl AVAILABLE_WORKING time TWHF 17:00-24:00
+acl AVAILABLE_WORKING time TWHF 00:00-03:00
+```
+
+Settingan diatas adalah untuk mengatur proxy server (no8)
+pada pengaturan squid.conf adalah mengatur agar bisa login(no9) dan hanya bisa akses pada waktu tertentu lalu pada acl.conf adalah mengatur waktu tertentunya(no10).
+
+Untuk menambahkan user dan pass bisa menggunakan command
+```
+htpasswd -b -c /etc/squid/passwd lufffybelikapald06 luffy_d06
+htpasswd -b /etc/squid/passwd zorobelikapald06 zoro_d06
+```
+
 ## Soal 11
 ## Soal 12
 ## Soal 13
