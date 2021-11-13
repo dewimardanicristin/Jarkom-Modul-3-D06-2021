@@ -188,7 +188,7 @@ pada pengaturan squid.conf adalah mengatur agar bisa login(no9) dan hanya bisa a
 
 Untuk menambahkan user dan pass bisa menggunakan command
 ```
-htpasswd -b -c /etc/squid/passwd lufffybelikapald06 luffy_d06
+htpasswd -b -c /etc/squid/passwd luffybelikapald06 luffy_d06
 htpasswd -b /etc/squid/passwd zorobelikapald06 zoro_d06
 ```
 ## Soal 11
