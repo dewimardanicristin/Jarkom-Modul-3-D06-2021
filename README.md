@@ -266,7 +266,7 @@ Lalu kita coba ganti proxy agar diseeting ke user zorobelikapald06 dan coba akse
 
 User zoro akan diblok untuk mengakses file yang berkestensi png/jpg, Lalu kita coba untuk akses file yg berekstensi lain:
 
-![image](https://user-images.githubusercontent.com/58657135/141645201-a9380bb6-65b0-4211-b945-18b057f0206d.png)
+![image](https://user-images.githubusercontent.com/58657135/141645698-5d52545b-19f8-4906-91ec-a34ad7189f1e.png)
 
 file terbuka dengan cepat (tidak ada delay).
 
