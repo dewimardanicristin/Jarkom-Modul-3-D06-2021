@@ -178,9 +178,9 @@ http_access deny all
 
 Lalu pada `/etc/squid/acl.conf` kita isi:
 ```
-acl AVAILABLE_WORKING time MTWH 07:00-11:00
-acl AVAILABLE_WORKING time TWHF 17:00-24:00
-acl AVAILABLE_WORKING time TWHF 00:00-03:00
+acl AVAILABLE_WORKING1 time MTWH 07:00-11:00
+acl AVAILABLE_WORKING2 time TWHF 17:00-24:00
+acl AVAILABLE_WORKING3 time A    00:00-03:00
 ```
 
 Settingan diatas adalah untuk mengatur proxy server (no8)
