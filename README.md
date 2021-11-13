@@ -5,16 +5,69 @@ Anggota :
 - Ahdan Amanullah Irfan Muzhaffar 05111940000197
 - Dewi Mardani 05111940000225
 
+## Konfigurasi pada network
+![image](https://user-images.githubusercontent.com/73428220/141615365-caa11e5b-cfe6-463d-9c49-9af957984b3c.png)
+
+### Foosha
+```
+auto eth0
+iface eth0 inet dhcp
+auto eth1
+iface eth1 inet static
+	address 10.24.1.1
+	netmask 255.255.255.0
+auto eth2
+iface eth2 inet static
+	address 10.24.2.1
+	netmask 255.255.255.0
+auto eth3
+iface eth3 inet static
+        address 10.24.3.1
+        netmask 255.255.255.0
+```
+### EniesLobby
+```
+    auto eth0
+    iface eth0 inet static
+	address 10.24.2.2
+	netmask 255.255.255.0
+	gateway 10.24.2.1
+```
+
+### water7
+```
+    auto eth0
+    iface eth0 inet static
+	address 10.24.2.3
+	netmask 255.255.255.0
+	gateway 10.24.2.1
+```
+### Jipangu
+```
+auto eth0
+iface eth0 inet static
+    address 10.24.2.4
+    netmask 255.255.255.0
+    gateway 10.24.2.1
+```
+### Loguetown, alabasta, Tottoland, skypie
+```
+auto eth0
+iface eth0 inet dhcp
+```
+
 ## Soal 1
 Luffy bersama Zoro berencana membuat peta tersebut dengan kriteria EniesLobby sebagai DNS Server, Jipangu sebagai DHCP Server, Water7 sebagai Proxy Server
 - Pada EniesLobby, lakukan `apt-get update` kemudian `apt-get install bind9`
-- Pada Jipangu, laukan `apt-get update` kemudian `apt-get install isc-dhcp-server`
+- Pada Jipangu, laukan `apt-get update` kemudian `apt-get install isc-dhcp-server`, edit interface pada file ```/etc/default/isc-dhcp-server``` dengan ```eth0```
 - Pada Water7, lakukan `apt-get update` kemudian `apt-get install squid`
 
 ## Soal 2
 Foosha sebagai DHCP Relay
 - Pada Foosha, lakukan `apt-get update` kemudian `apt-get install isc-dhcp-relay`
 - Edit file `/etc/default/isc-dhcp-relay` seperti berikut
+- ![image](https://user-images.githubusercontent.com/73428220/141615337-3be0f679-75bb-484f-aa97-e492c116d06c.png)
+- Restart DHCP Relay dengan perintah ```service isc-dhcp-relay restart```
 
 ## Soal 3
 Client yang melalui Switch1 mendapatkan range IP dari `[prefix IP].1.20 - [prefix IP].1.99` dan `[prefix IP].1.150 - [prefix IP].1.169`
@@ -123,9 +176,9 @@ http_access deny all
 
 Lalu pada `/etc/squid/acl.conf` kita isi:
 ```
-acl AVAILABLE_WORKING time MTWH 07:00-11:00
-acl AVAILABLE_WORKING time TWHF 17:00-24:00
-acl AVAILABLE_WORKING time TWHFA 00:00-03:00
+acl AVAILABLE_WORKING1 time MTWH 07:00-11:00
+acl AVAILABLE_WORKING2 time TWHF 17:00-24:00
+acl AVAILABLE_WORKING3 time A    00:00-03:00
 ```
 
 Settingan diatas adalah untuk mengatur proxy server (no8)
@@ -133,7 +186,7 @@ pada pengaturan squid.conf adalah mengatur agar bisa login(no9) dan hanya bisa a
 
 Untuk menambahkan user dan pass bisa menggunakan command
 ```
-htpasswd -b -c /etc/squid/passwd lufffybelikapald06 luffy_d06
+htpasswd -b -c /etc/squid/passwd luffybelikapald06 luffy_d06
 htpasswd -b /etc/squid/passwd zorobelikapald06 zoro_d06
 ```
 
