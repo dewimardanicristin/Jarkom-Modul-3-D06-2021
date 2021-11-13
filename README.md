@@ -5,72 +5,17 @@ Anggota :
 - Ahdan Amanullah Irfan Muzhaffar 05111940000197
 - Dewi Mardani 05111940000225
 
-
-## Konfigurasi pada network
-![image](https://user-images.githubusercontent.com/73428220/141615365-caa11e5b-cfe6-463d-9c49-9af957984b3c.png)
-
-### Foosha
-```
-auto eth0
-iface eth0 inet dhcp
-
-auto eth1
-iface eth1 inet static
-	address 10.24.1.1
-	netmask 255.255.255.0
-
-auto eth2
-iface eth2 inet static
-	address 10.24.2.1
-	netmask 255.255.255.0
-
-auto eth3
-iface eth3 inet static
-        address 10.24.3.1
-        netmask 255.255.255.0
-```
-### EniesLobby
-```
-    auto eth0
-    iface eth0 inet static
-	address 10.24.2.2
-	netmask 255.255.255.0
-	gateway 10.24.2.1
-```
-
-### water7
-```
-    auto eth0
-    iface eth0 inet static
-	address 10.24.2.3
-	netmask 255.255.255.0
-	gateway 10.24.2.1
-```
-### Jipangu
-```
-auto eth0
-iface eth0 inet static
-    address 10.24.2.4
-    netmask 255.255.255.0
-    gateway 10.24.2.1
-```
-### Loguetown, alabasta, Tottoland, skypie
-```
-auto eth0
-iface eth0 inet dhcp
-```
 ## Soal 1
 Luffy bersama Zoro berencana membuat peta tersebut dengan kriteria EniesLobby sebagai DNS Server, Jipangu sebagai DHCP Server, Water7 sebagai Proxy Server
 - Pada EniesLobby, lakukan `apt-get update` kemudian `apt-get install bind9`
-- Pada Jipangu, laukan `apt-get update` kemudian `apt-get install isc-dhcp-server`, edit interface pada file ```/etc/default/isc-dhcp-server``` dengan ```eth0```
+- Pada Jipangu, laukan `apt-get update` kemudian `apt-get install isc-dhcp-server`
 - Pada Water7, lakukan `apt-get update` kemudian `apt-get install squid`
 
 ## Soal 2
 Foosha sebagai DHCP Relay
 - Pada Foosha, lakukan `apt-get update` kemudian `apt-get install isc-dhcp-relay`
 - Edit file `/etc/default/isc-dhcp-relay` seperti berikut
-![image](https://user-images.githubusercontent.com/73428220/141615337-3be0f679-75bb-484f-aa97-e492c116d06c.png)
-- Restart DHCP Relay dengan perintah ```service isc-dhcp-relay restart```
+
 ## Soal 3
 Client yang melalui Switch1 mendapatkan range IP dari `[prefix IP].1.20 - [prefix IP].1.99` dan `[prefix IP].1.150 - [prefix IP].1.169`
 ### Pada Jipangu
@@ -178,9 +123,9 @@ http_access deny all
 
 Lalu pada `/etc/squid/acl.conf` kita isi:
 ```
-acl AVAILABLE_WORKING1 time MTWH 07:00-11:00
-acl AVAILABLE_WORKING2 time TWHF 17:00-24:00
-acl AVAILABLE_WORKING3 time A    00:00-03:00
+acl AVAILABLE_WORKING time MTWH 07:00-11:00
+acl AVAILABLE_WORKING time TWHF 17:00-24:00
+acl AVAILABLE_WORKING time TWHFA 00:00-03:00
 ```
 
 Settingan diatas adalah untuk mengatur proxy server (no8)
@@ -188,9 +133,33 @@ pada pengaturan squid.conf adalah mengatur agar bisa login(no9) dan hanya bisa a
 
 Untuk menambahkan user dan pass bisa menggunakan command
 ```
-htpasswd -b -c /etc/squid/passwd luffybelikapald06 luffy_d06
+htpasswd -b -c /etc/squid/passwd lufffybelikapald06 luffy_d06
 htpasswd -b /etc/squid/passwd zorobelikapald06 zoro_d06
 ```
+
+Untuk bisa mengakses proxy dengan nama jualbelikapal.d06.com maka kita harus setting dns untuk domain jualbelikapal.d06.com agar mengarah ke IP dari Water7 (Proxy Server):
+
+![image](https://user-images.githubusercontent.com/58657135/141645250-ed3c5e2d-37fd-4799-b16c-f5c4671cc3f4.png)
+
+![image](https://user-images.githubusercontent.com/58657135/141645267-f1523b73-6f09-482a-aa41-5bd4ab1fbfb0.png)
+
+Lakukan restart service bind9 pada EniesLobby.
+
+Tes jika akses proxy diluar waktu yang diperbolehkan:
+
+![image](https://user-images.githubusercontent.com/58657135/141645315-1b3400b4-c794-4853-8b6a-95cd31f79ceb.png)
+
+![image](https://user-images.githubusercontent.com/58657135/141645320-f7840aa1-94ba-47fd-b737-9491508d7a76.png)
+
+Tes pada waktu yang diperbolehkan:
+
+![image](https://user-images.githubusercontent.com/58657135/141645337-3d59e2d9-cc9f-4c3d-9c14-1ec40eff7b9d.png)
+
+![image](https://user-images.githubusercontent.com/58657135/141645346-63cc1557-ef43-4094-b71a-f5201063d210.png)
+
+![image](https://user-images.githubusercontent.com/58657135/141645359-22a83981-4137-4aa5-afe6-4072114d6f11.png)
+
+
 ## Soal 11
 ### Pada Water7(Proxy Server)
 Pertama sambungkan terlebih dahulu Water7 dengan Enieslobby (ubah nameserver):
@@ -223,5 +192,31 @@ Test dengan menyalakan proxy lalu mengakses 'google.com'
 ![image](https://user-images.githubusercontent.com/58657135/140913804-f20ede10-c2c5-4051-aa23-291a39c0c302.png)
 
 (jika tidak bisa test dulu apakah di proxy server bisa ngakses ke super.fraanky.d06.com pakai lynx)
-## Soal 12
-## Soal 13
+
+## Soal 12 - 13
+Atur squid.conf pada node Water7 menjadi seperti ini lalu lakukan restart pada service squid:
+
+![image](https://user-images.githubusercontent.com/58657135/141644945-f2ca7959-efd7-4d06-9352-5a20cadf2504.png)
+
+Lalu coba gunakan proxy pada client Loguetown dan akses web super.franky.d06.com dan akses menggunakan user luffybelikapald06:
+
+![image](https://user-images.githubusercontent.com/58657135/141645058-b391b59e-671c-4420-88ff-b593a60a5a94.png)
+
+![image](https://user-images.githubusercontent.com/58657135/141645068-9c5c5f95-8016-4844-815b-44507f2580b8.png)
+
+Karena user luffy didelay sat download jpg dan png sehingga proses download akan sangat lambat:
+![image](https://user-images.githubusercontent.com/58657135/141645081-6437ad16-15a9-494e-8c98-bdf628be2515.png)
+
+Lalu kita coba ganti proxy agar diseeting ke user zorobelikapald06 dan coba akses super.franky.d06.com:
+
+![image](https://user-images.githubusercontent.com/58657135/141645146-c49aedc8-8993-40a2-9bc1-5fa4e61f8ebb.png)
+
+User zoro akan diblok untuk mengakses file yang berkestensi png/jpg, Lalu kita coba untuk akses file yg berekstensi lain:
+
+![image](https://user-images.githubusercontent.com/58657135/141645201-a9380bb6-65b0-4211-b945-18b057f0206d.png)
+
+file terbuka dengan cepat (tidak ada delay).
+
+
+
+
